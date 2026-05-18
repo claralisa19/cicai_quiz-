@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cicai Quiz - English Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="bg-emoji" style="top: 10%; left: 10%;">✨</div>
+    <div class="bg-emoji" style="top: 20%; right: 15%;">📝</div>
+    <div class="bg-emoji" style="top: 75%; left: 15%;">🎈</div>
+    <div class="bg-emoji" style="top: 70%; right: 12%;">🌟</div>
+
+    <div class="quiz-container">
+        
+        <div id="halaman-welcome" class="alur-halaman">
+            <div class="kotak-putih-spesial">
+                <h1 class="logo-kuis">✨ Cicai Quiz ✨</h1>
+            </div>
+            
+            <div class="emoji-wrapper-renggang">
+                <span>🎮</span>
+                <span>🎈</span>
+                <span>🌟</span>
+            </div>
+            
+            <div class="kotak-putih-spesial">
+                <p class="sub-judul">Welcome to Cicai Quiz! Test your English proficiency here.</p>
+            </div>
+            
+            <button class="btn-utama" onclick="pindahKeNickname()">Start Game ➔</button>
+        </div>
+
+        <div id="halaman-nickname" class="alur-halaman" style="display: none;">
+            <h2>Type Your Nickname</h2>
+            <p class="instruksi">Enter your name or initials below:</p>
+            <input type="text" id="input-nama" placeholder="Type your name here..." autocomplete="off">
+            <p id="peringatan-nama" style="color: #e74c3c; font-size: 14px; display: none; margin: 5px 0;">Name cannot be empty!</p>
+            <button class="btn-utama" onclick="mulaiCountdown()">Next ➔</button>
+        </div>
+
+        <div id="halaman-countdown" class="alur-halaman" style="display: none;">
+            <div id="angka-countdown">3</div>
+            <p class="teks-bersiap">Get Ready...</p>
+        </div>
+
+        <div id="halaman-kuis" class="alur-halaman" style="display: none;">
+            <div class="quiz-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 10px;">
+                <h2 id="halo-user" style="margin: 0; font-size: 20px;">Hi, Player!</h2>
+                <div id="info-nomor" style="background: #ffffff; padding: 6px 14px; border-radius: 20px; font-weight: bold; border: 2px solid #e8ecf1; font-size: 14px; box-shadow: 0 4px 0 #e8ecf1;">Question 1/10</div>
+            </div>
+
+            <div class="progress-bar" style="margin-bottom: 20px;">
+                <div id="progress-isi"></div>
+            </div>
+
+            <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+                <div style="background: #f1f2f6; padding: 10px 24px; border-radius: 30px; font-weight: 700; font-size: 18px; border: 3px solid #ced6e0; display: inline-flex; align-items: center; gap: 8px;">
+                    <span id="timer-teks">Time Left: 20s</span>
+                </div>
+            </div>
+
+            <div class="quiz-body">
+                <h3 id="pertanyaan">Loading question...</h3>
+                
+                <div class="pilihan-wrapper">
+                    <button class="btn-pilihan" onclick="pilihJawaban(0)" id="opsi0"></button>
+                    <button class="btn-pilihan" onclick="pilihJawaban(1)" id="opsi1"></button>
+                    <button class="btn-pilihan" onclick="pilihJawaban(2)" id="opsi2"></button>
+                    <button class="btn-pilihan" onclick="pilihJawaban(3)" id="opsi3"></button>
+                </div>
+            </div>
+
+            <button id="btn-next" onclick="pertanyaanSelanjutnya()" style="display: none; margin-top: 15px;">Next Question ➔</button>
+        </div>
+
+        <div id="halaman-hasil" class="alur-halaman" style="display: none;">
+            <div class="kotak-putih-spesial" style="margin-bottom: 10px;">
+                <h1 class="judul-selesai" style="font-size: 24px; margin: 5px 0;">✨ Quiz Finished 🎮</h1>
+            </div>
+
+            <div id="reward-visual" style="font-size: 45px; margin-bottom: 5px;"></div>
+            <p id="pesan-reward" style="margin-top: 0; margin-bottom: 10px; font-size: 14px; padding: 0 10px;"></p>
+            
+            <div class="kotak-skor-akhir" style="margin-bottom: 15px; padding: 10px;">
+                <p style="margin: 2px 0;"><span id="nama-pemenang">Player</span>, your final score:</p>
+                <h2 style="margin: 5px 0; font-size: 22px;">Score: <span id="skor-akhir">0</span> / 100</h2>
+            </div>
+
+            <div id="kotak-leaderboard-wrapper" style="background: #ffffff; border: 3px solid #ced6e0; border-radius: 20px; padding: 12px; margin-bottom: 15px; box-shadow: 0 5px 0 #ced6e0; max-height: 180px; overflow-y: auto;">
+                <div id="konten-leaderboard">
+                    <div style="font-style: italic; color: #a4b0be; font-size: 14px;">Loading rankings...</div>
+                </div>
+            </div>
+
+            <div class="emoji-wrapper-renggang" style="margin-top: 5px; margin-bottom: 10px; font-size: 16px;">
+                <span>🎮</span>
+                <span>🎈</span>
+                <span>🌟</span>
+                <span>🎉</span>
+            </div>
+
+            <button class="btn-ulang" onclick="ulangiKuis()" style="width: 100%; padding: 12px; font-size: 16px; font-weight: bold; cursor: pointer;">Play Again ↩</button>
+        </div>
+
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>
